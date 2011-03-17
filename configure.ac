@@ -3,16 +3,21 @@
 
 AC_PREREQ([2.67])
 AC_INIT([libbios], [1.1.0], [david.chen@yale.edu])
-AC_CONFIG_SRCDIR([src/intervalFind.h])
+AC_CONFIG_SRCDIR([lib/array.h])
 AC_CONFIG_HEADERS([config.h])
+AC_CONFIG_MACRO_DIR([m4])
+
+AM_INIT_AUTOMAKE([-Wall -Werror])
+LT_INIT
 
 # Checks for programs.
 AC_PROG_CC
-AC_DISABLE_STATIC
 AC_PROG_LIBTOOL
 
 # Checks for libraries.
-# check for gsl
+AC_CHECK_LIB([m], [log], [], [AC_MSG_ERROR([Cannot find standard math library])])
+AC_CHECK_LIB([gslcblas], [cblas_dgemm], [], [AC_MSG_ERROR([Cannot find cblas library])])
+AC_CHECK_LIB([gsl], [gsl_ran_hypergeometric_pdf], [], [AC_MSG_ERROR([Cannot find gsl library])])
 
 # Checks for header files.
 AC_CHECK_HEADERS([fcntl.h stdlib.h string.h unistd.h])
@@ -25,5 +30,5 @@ AC_FUNC_MALLOC
 AC_FUNC_REALLOC
 AC_CHECK_FUNCS([memset pow sqrt strchr strdup strerror strrchr strstr strtol])
 
-AC_CONFIG_FILES([Makefile])
+AC_CONFIG_FILES([Makefile lib/Makefile])
 AC_OUTPUT
