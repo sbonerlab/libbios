@@ -1,0 +1,11 @@
+ - Add documentation for new lib functions
+ - Add Doxygen support in Autotools
+ - pkg-config???
+ - Find out and document how to compile other pkgs against libbios if libbios 
+   not installed to directory listed in ld.so.conf
+ - 
+ - Standardized struct to describe bio primitives:
+   - Chromosomes
+   - Regions		: seqviz, mrf2wig.c
+   - ??
+ - rev() - standardize?
