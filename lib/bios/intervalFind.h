@@ -44,6 +44,7 @@ extern Array intervalFind_getIntervalPointers (void);
 extern Array intervalFind_parseFile (char* fileName, int source);
 extern void intervalFind_parseLine (Interval *thisInterval, char* line, int source);
 extern char* intervalFind_writeInterval (Interval *currInterval);
+extern int intervalFind_getSize (Interval *currInterval);
 
 
 

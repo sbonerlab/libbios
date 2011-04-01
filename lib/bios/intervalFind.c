@@ -380,3 +380,23 @@ char* intervalFind_writeInterval (Interval *currInterval)
   }
   return string (buffer);
 }
+
+
+
+/**
+ * Get size of an Interval. This is done by summing up the size of the subIntervals
+ * @param[in] currInterval Pointer to an Interval
+ * @return An integer representing the size
+ */
+int intervalFind_getSize (Interval *currInterval)
+{
+  SubInterval *currSubInterval;
+  int i,size;
+
+  size = 0;
+  for (i = 0; i < arrayMax (currInterval->subIntervals); i++) {
+    currSubInterval = arrp (currInterval->subIntervals,i,SubInterval);
+    size += currSubInterval->end - currSubInterval->start;
+  }
+  return size;
+}
