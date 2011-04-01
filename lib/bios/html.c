@@ -1750,8 +1750,10 @@ void html_printGenericStyleSheet (int bodyFontSize)
   puts ("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\">");
   puts ("<style type=\"text/css\" media=\"screen\">");
   printf ("body {font:%dpx Verdana,Arial,Helvetica, sans-serif; color:#2F4F4F; margin:50px 50px 50px 50px;}\n",bodyFontSize);
-  puts ("h1 {font-size:20px; font-weight:1200; color:#0E4C92;}");
-  puts ("h2 {font-size:14px; font-weight:1000; color:#0E4C92;}");
+  puts ("h1 {font-size:32px; font-weight:1200; color:#0E4C92;}");
+  puts ("h2 {font-size:24px; font-weight:1000; color:#0E4C92;}");
+  puts ("h3 {font-size:16px; font-weight:1000; color:#0E4C92;}");
+  puts ("h4 {font-size:12px; font-weight:1000; color:#0E4C92;}");
   puts (".note {font-style:italic}");
   puts ("a       {color:#0000CD; text-decoration:none;}");
   puts ("a:hover {color:#4B0082; text-decoration:none;}");  
