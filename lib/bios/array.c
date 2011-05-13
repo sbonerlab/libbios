@@ -53,52 +53,52 @@ static int nArrays = 0 ;
 
 Array uArrayCreate(int n, int size)
 { 
-  Array new = (Array) malloc(sizeof(struct ArrayStruct)) ;
+	Array new = (Array) malloc(sizeof(struct ArrayStruct)) ;
 
-  if (!new)
-    die(mallocErrorMsg) ;
-  if (size <= 0)
-    die("negative size %d in uArrayCreate", size) ;
-  if (n < 1)
-    n = 1 ;
-  new->base = calloc(n, size) ;
-  if (!new->base)
-    die(mallocErrorMsg) ;
-  new->dim = n ;
-  new->max = 0 ;
-  new->size = size ;
-  nArrays++ ;
-  return new ;
+	if (!new)
+		die(mallocErrorMsg) ;
+	if (size <= 0)
+		die("negative size %d in uArrayCreate", size) ;
+	if (n < 1)
+		n = 1 ;
+	new->base = calloc(n, size) ;
+	if (!new->base)
+		die(mallocErrorMsg) ;
+	new->dim = n ;
+	new->max = 0 ;
+	new->size = size ;
+	nArrays++ ;
+	return new ;
 }
 
 
 
 static void arrayExtend (Array a, int n)
 {
-  char *new ;
-  int oldsize, newsize ;
+	char *new ;
+	int oldsize, newsize ;
 
-  if (!a || n < a->dim)
-    return ;
+	if (!a || n < a->dim)
+		return ;
 
-  if (a->dim < 1 << 20)  /* 1 megabyte */
-    a->dim *= 2 ;
-  else
-    a->dim += 1 << 20 ;
-  if (n >= a->dim)
-    a->dim = n + 1 ;
+	if (a->dim < 1 << 20)  /* 1 megabyte */
+		a->dim *= 2 ;
+	else
+		a->dim += 1 << 20 ;
+	if (n >= a->dim)
+		a->dim = n + 1 ;
 
-  newsize = a->dim * a->size ;
-  oldsize = a->size*a->max ;
-  if (newsize <= oldsize) 
-    die("arrayExtend: oldsize %d, newsize %d", oldsize, newsize) ;
-  new = malloc(newsize) ;
-  if (!new)
-    die(mallocErrorMsg) ;
-  memcpy(new, a->base, oldsize) ;
-  memset(new+oldsize, 0, newsize-oldsize) ;
-  free(a->base) ;
-  a->base = new ;
+	newsize = a->dim * a->size ;
+	oldsize = a->size*a->max ;
+	if (newsize <= oldsize) 
+		die("arrayExtend: oldsize %d, newsize %d", oldsize, newsize) ;
+	new = malloc(newsize) ;
+	if (!new)
+		die(mallocErrorMsg) ;
+	memcpy(new, a->base, oldsize) ;
+	memset(new+oldsize, 0, newsize-oldsize) ;
+	free(a->base) ;
+	a->base = new ;
 }
 
 
@@ -108,19 +108,19 @@ static void arrayExtend (Array a, int n)
  */
 void arrayClear(Array a)
 { 
-  memset(a->base, 0, (size_t)(a->dim * a->size)) ;
-  a->max = 0 ;
+	memset(a->base, 0, (size_t)(a->dim * a->size)) ;
+	a->max = 0 ;
 }
 
 
 
 void uArrayDestroy (Array a)
 {
-  if(a) {
-    free (a->base) ;
-    free(a) ;
-    nArrays-- ;
-  }
+	if (a) {
+		free (a->base) ;
+		free(a) ;
+		nArrays-- ;
+	}
 }
 
 
@@ -130,49 +130,49 @@ void uArrayDestroy (Array a)
  */
 int arrayNumber(void)
 { 
-  return nArrays ;
+	return nArrays ;
 }
 
 
 
 char *uArray(Array a, int i) 
 {
-  if (i >= a->max) { 
-    if (i >= a->dim)
-      arrayExtend (a,i) ;
-    a->max = i+1 ;
-  }
-  return a->base + i*a->size ;
+	if (i >= a->max) { 
+	if (i >= a->dim)
+		arrayExtend (a,i) ;
+		a->max = i+1 ;
+	}
+	return a->base + i*a->size ;
 }
 
 
 
 char *uArrayCheck(Array a, int i)
 {
-  if (i < 0)
-    die ("array: referencing array element %d < 0", i) ;
+	if (i < 0)
+		die ("array: referencing array element %d < 0", i) ;
 
-  return uArray(a, i) ;
+	return uArray(a, i) ;
 }
 
 
 
 char *uArrCheck(Array a, int i)
 {
-  if (i >= a->max || i < 0)
-    die ("array index %d out of bounds [0,%d]",
-	       i, a->max - 1) ;
-  return a->base + i*a->size ;
+	if (i >= a->max || i < 0)
+		die ("array index %d out of bounds [0,%d]", 
+		     i, a->max - 1) ;
+	return a->base + i*a->size ;
 }
 
 
 
 char *uArrPop(Array a)
 {
-  int i = --a->max ;
-  if (i < 0)
-    die ("stackPop: empty stack") ;
-  return a->base + i*a->size ;
+	int i = --a->max ;
+	if (i < 0)
+		die ("stackPop: empty stack") ;
+	return a->base + i*a->size ;
 }
 
 
@@ -181,15 +181,15 @@ char *uArrPop(Array a)
  */
 Array arrayCopy(Array a)
 {
-  Array b ;
-  if (a && a->size) {
-    b = uArrayCreate (a->max, a->size) ;
-    memcpy(b->base, a->base, a->max * a->size);
-    b->max = a->max ;
-    return b;
-  }
-  else
-    return NULL ;
+	Array b ;
+	if (a && a->size) {
+		b = uArrayCreate (a->max, a->size) ;
+		memcpy(b->base, a->base, a->max * a->size);
+		b->max = a->max ;
+		return b;
+	}
+	else
+		return NULL ;
 }
 
 
@@ -206,45 +206,45 @@ Array arrayCopy(Array a)
  */
 void arrayMove(Array from, int start, int end, Array to) 
 { 
-  int i ;
-  int mf ; /* number of elements in 'from' */
-  int n ;  /* number of elements to move */
-  int nb ; /* number of bytes to move from 'from' to 'to' */
-  int mb ; /* number of bytes to move down within 'from' */
-  char *fromp ; /* pointer to start position in 'from' */
-  char *fromp2 ; /* beginning of area to shift in 'from' */
-  char *fromp3 ; /* beginning of area to clear in 'from' */
-  char *top ;   /* pointer to target position in 'to' */
+	int i ;
+	int mf ; /* number of elements in 'from' */
+	int n ;  /* number of elements to move */
+	int nb ; /* number of bytes to move from 'from' to 'to' */
+	int mb ; /* number of bytes to move down within 'from' */
+	char *fromp ; /* pointer to start position in 'from' */
+	char *fromp2 ; /* beginning of area to shift in 'from' */
+	char *fromp3 ; /* beginning of area to clear in 'from' */
+	char *top ;   /* pointer to target position in 'to' */
 
-  if (!from || start < 0 || end >= arrayMax(from) || start > end)
-    die("arrayMove: max=%d start=%d end=%d",
-        from ? arrayMax(from) : -1, start, end) ;
-  if (to && to->size != from->size)
-    die("arrayMove: size mismatch %d/%d",
-        from->size, to->size) ;
-  if (to == from)
-    die("arrayMove: from and to are the same.") ;
+	if (!from || start < 0 || end >= arrayMax(from) || start > end)
+		die("arrayMove: max=%d start=%d end=%d",
+		    from ? arrayMax(from) : -1, start, end) ;
+	if (to && to->size != from->size)
+		die("arrayMove: size mismatch %d/%d",
+		    from->size, to->size) ;
+	if (to == from)
+		die("arrayMove: from and to are the same.") ;
 
-  mf = arrayMax(from) ;
-  n = end - start + 1 ; /* number of elements to move */
-  nb = n * from->size ; /* number of bytes to move and set to zero */
-  fromp = from->base + start*from->size ;
-  if (to) {
-    int mt = arrayMax(to) ;  /* number of elements in 'to' */
-    uArray(to, mt + n - 1) ; /* allocate target space */
-    top = to->base + mt*to->size ;
-    memcpy(top, fromp, nb) ;
-  }
-  mb = (mf - end -1) * from->size ;
-  if (mb) {
-    fromp2 = from->base + (end+1)*from->size ;
-    i = mb ;
-    while (i--) 
-      *fromp++ = *fromp2++ ; /* shuffle down */
-  }
-  fromp3 = from->base + (mf - n)*from->size ;
-  memset(fromp3, 0, nb) ;
-  from->max = mf - n ;
+	mf = arrayMax(from) ;
+	n = end - start + 1 ; /* number of elements to move */
+	nb = n * from->size ; /* number of bytes to move and set to zero */
+	fromp = from->base + start*from->size ;
+	if (to) {
+		int mt = arrayMax(to) ;  /* number of elements in 'to' */
+		uArray(to, mt + n - 1) ; /* allocate target space */
+		top = to->base + mt*to->size ;
+		memcpy(top, fromp, nb) ;
+	}
+	mb = (mf - end -1) * from->size ;
+	if (mb) {
+		fromp2 = from->base + (end+1)*from->size ;
+		i = mb ;
+		while (i--) 
+			*fromp++ = *fromp2++ ; /* shuffle down */
+	}
+	fromp3 = from->base + (mf - n)*from->size ;
+	memset(fromp3, 0, nb) ;
+	from->max = mf - n ;
 }
 
 
@@ -258,29 +258,29 @@ void arrayMove(Array from, int start, int end, Array to)
  */
 void arrayByteUniq(Array a)
 { 
-  int i, j, k , as ;
-  char *x, *y, *ab  ;
+	int i, j, k , as ;
+	char *x, *y, *ab  ;
   
-  if (!a || !a->size || arrayMax(a) < 2 )
-    return ;
+	if (!a || !a->size || arrayMax(a) < 2 )
+		return ;
 
-  ab = a->base ; 
-  as = a->size ;
-  for (i = 1, j = 0 ; i < arrayMax(a) ; i++)
-    { x = ab + i * as ; y = ab + j * as ;
-      for (k = a->size ; k-- ;)		
-	if (*x++ != *y++) 
-	  goto different ;
-      continue ;
+	ab = a->base ; 
+	as = a->size ;
+	for (i = 1, j = 0 ; i < arrayMax(a) ; i++) {
+		x = ab + i * as ; y = ab + j * as ;
+		for (k = a->size ; k-- ;)		
+			if (*x++ != *y++) 
+				goto different ;
+		continue ;
       
-    different:
-      if (i != ++j)
-	{ x = ab + i * as ; y = ab + j * as ;
-	  for (k = a->size ; k-- ;)	 
-	    *y++ = *x++ ;
+different:
+		if (i != ++j) {
+			x = ab + i * as ; y = ab + j * as ;
+			for (k = a->size ; k-- ;)	 
+				*y++ = *x++ ;
+		}
 	}
-    }
-  arrayMax(a) = j + 1 ;
+	arrayMax(a) = j + 1 ;
 }
 
 
@@ -295,42 +295,42 @@ void arrayByteUniq(Array a)
  */
 void arrayUniq(Array a, Array b, int (*order)(void*,void*))
 { 
-  int i, j, k;
-  char *to ; 
-  char *from ;
-  char *r ;
+	int i, j, k;
+	char *to ; 
+	char *from ;
+	char *r ;
   
-  if (!a || !a->size || (b && a->size != b->size))
-    die("arrayUniq: bad input") ;
+	if (!a || !a->size || (b && a->size != b->size))
+		die("arrayUniq: bad input") ;
 
-  if (arrayMax(a) < 2)
-    return ;
+	if (arrayMax(a) < 2)
+		return ;
 
-  j = 0;
-  to = a->base;
-  for (i=1; i<arrayMax(a); i++) {
-    from = a->base + i * a->size;
-    if (order (to, from)) { /* differ: stay in a */
-      to += a->size ;
-      if (to != from) {
-        r = to;
-        k = a->size ;
-        while (k--)
-          *r++ = *from++;
-      }
-      j++;
-    }
-    else {  /* equal: move to b */
-      if (b) {
-        r = uArray(b, b->max) ;
-        k = a->size ;
-        while (k--)
-          *r++ = *from++;
-      }
-    }
-  }
-  arrayMax(a) = j+1;
-  return;
+	j = 0;
+	to = a->base;
+	for (i = 1; i < arrayMax(a); i++) {
+		from = a->base + i * a->size;
+		if (order (to, from)) { /* differ: stay in a */
+			to += a->size ;
+			if (to != from) {
+				r = to;
+				k = a->size ;
+				while (k--)
+					*r++ = *from++;
+			}
+			j++;
+		}
+		else {  /* equal: move to b */
+			if (b) {
+				r = uArray(b, b->max) ;
+				k = a->size ;
+				while (k--)
+					*r++ = *from++;
+			}
+		}
+	}
+	arrayMax(a) = j+1;
+	return;
 }
 
 
@@ -340,20 +340,19 @@ void arrayUniq(Array a, Array b, int (*order)(void*,void*))
  */
 void arraySort (Array a, int (*order)(void*,void*))
 {
-  unsigned int n = a->max,
-               s = a->size ;
-  void *v = a->base ;
+	unsigned int n = a->max,
+		     s = a->size ;
+	void *v = a->base ;
 
-  if (n > 1) 
+	if (n > 1) { 
 #ifndef THINK_C
-    qsort(v, n, s, (int (*)(const void *, const void *)) order) ;
+		qsort(v, n, s, (int (*)(const void *, const void *)) order) ;
 #else 
-    { extern void qcksrt (char *base, int n, int size, 
-			  int (*comp)(void*, void*)) ;
-      qcksrt (v, n, s, order) ;
-    }
+		extern void qcksrt (char *base, int n, int size, 
+				    int (*comp)(void*, void*)) ;
+		qcksrt (v, n, s, order) ;
 #endif
-
+	}
 }
 
 
@@ -364,13 +363,13 @@ void arraySort (Array a, int (*order)(void*,void*))
  */
 int arrayIsEntry (Array a, int i, void *s)
 {
-  char *cp = uArray(a,i), *cq = s ;
-  int j = a->size;
+	char *cp = uArray(a,i), *cq = s ;
+	int j = a->size;
 
-  while (j--)
-    if (*cp++ != *cq++) 
-      return 0 ;
-  return 1;
+	while (j--)
+		if (*cp++ != *cq++) 
+			return 0 ;
+	return 1;
 }
 
 
@@ -385,52 +384,55 @@ int arrayIsEntry (Array a, int i, void *s)
 int arrayFind(Array a, void *s, int *ip, int (* order)(void*, void*))
 {
 
-  int ord;
-  int i = 0 , j = arrayMax(a), k;
+	int ord;
+	int i = 0 , j = arrayMax(a), k;
 
-  if(!j || (ord = order(s,uArray(a,0)))<0)
-    /* array empty or s smaller than first element */
-    { if (ip)
-	*ip = -1; 
-      return 0;    /* not found */
-    }   
+	if (!j || (ord = order(s,uArray(a,0))) < 0) {
+	/* array empty or s smaller than first element */
+		if (ip)
+			*ip = -1; 
+		return 0;    /* not found */
+	}   
 
-  if (ord == 0)  /* exact match on first element */
-    { if (ip)
-	*ip = 0;
-      return 1;    /* found */
-    }
-
-  if ((ord = order(s,uArray(a,--j)))>0 )
-    /* s larger than last element of array */
-    { if (ip)
-	*ip = j; 
-      return 0;
-    }
-  
-  if (ord == 0)  /* exact match on last element */
-    { if (ip)
-	*ip = j;
-      return 1;
-    }
-
-  for (;;)
-    { k = i + ((j-i) >> 1) ; /* midpoint */
-      if ((ord = order(s, uArray(a,k))) == 0)
-	{ if (ip)
-	    *ip = k; 
-	  return 1;
+	if (ord == 0)  /* exact match on first element */
+	{
+		if (ip)
+			*ip = 0;
+		return 1;    /* found */
 	}
-      if (ord > 0) 
-	(i = k);
-      else
-	(j = k) ;
-      if (i == (j-1) )
-        break;
-    }
-  if (ip)
-    *ip = i ;
-  return 0;
+
+	if ((ord = order(s,uArray(a,--j)))>0 ) {
+		/* s larger than last element of array */
+		if (ip)
+			*ip = j; 
+		return 0;
+	}
+  
+	if (ord == 0) {
+		/* exact match on last element */
+		if (ip)
+			*ip = j;
+		return 1;
+	}
+
+	for (;;) {
+		k = i + ((j-i) >> 1) ; /* midpoint */
+		if ((ord = order(s, uArray(a,k))) == 0) {
+			if (ip)
+				*ip = k; 
+			return 1;
+		}
+		if (ord > 0) 
+			(i = k);
+		else
+
+			(j = k) ;
+		if (i == (j-1) )
+			break;
+	}
+	if (ip)
+		*ip = i ;
+	return 0;
 }
 
 
@@ -441,23 +443,21 @@ int arrayFind(Array a, void *s, int *ip, int (* order)(void*, void*))
  */
 int arrayRemove (Array a, void * s, int (* order)(void*,void*))
 {
-  int i;
+	int i;
 
-  if (arrayFind(a, s, &i,order))
-    {
-      /* memcpy would be faster but regions overlap
-       * and memcpy is said to fail with some compilers
-       */
-      char *cp = uArray(a,i),  *cq = cp + a->size ;
-      int j = (arrayMax(a) - i)*(a->size) ;
-      while(j--)
-	*cp++ = *cq++;
+	if (arrayFind(a, s, &i,order)) {
+		/* memcpy would be faster but regions overlap
+		 * and memcpy is said to fail with some compilers
+		 */
+		char *cp = uArray(a,i),  *cq = cp + a->size ;
+		int j = (arrayMax(a) - i)*(a->size) ;
+		while(j--)
+			*cp++ = *cq++;
 
-      arrayMax(a) --;
-      return 1;
-    }
-  else
-    return 0;
+		arrayMax(a) --;
+		return 1;
+	} else
+		return 0;
 }
 
 
@@ -467,20 +467,20 @@ int arrayRemove (Array a, void * s, int (* order)(void*,void*))
  */
 int arrayRemoveD (Array a, int i)
 {
-  if (i<arrayMax(a)){
-    /* memcpy would be faster but regions overlap
-     * and memcpy is said to fail with some compilers
-     */
-    char *cp = uArray(a,i),  *cq = cp + a->size ;
-    int j = (arrayMax(a) - i)*(a->size) ;
-    while(j--)
-      *cp++ = *cq++;
+	if (i < arrayMax(a)) {
+		/* memcpy would be faster but regions overlap
+		 * and memcpy is said to fail with some compilers
+		 */
+		char *cp = uArray(a,i),  *cq = cp + a->size ;
+		int j = (arrayMax(a) - i)*(a->size) ;
+		while (j--)
+			*cp++ = *cq++;
 
-    arrayMax(a) --;
-    return 1;
-  }
-  else
-    return 0;
+		arrayMax(a) --;
+		return 1;
+	}
+	else
+		return 0;
 }
 
 
@@ -493,32 +493,32 @@ int arrayRemoveD (Array a, int i)
 */
 int arrayFindInsert(Array a, void * s, int *ip, int (*order)(void*,void*)) 
 {
-  int i, j, k ;
-  int *ip2 = ip ? ip : &i ;
-  char *cp, *cq ;
+	int i, j, k ;
+	int *ip2 = ip ? ip : &i ;
+	char *cp, *cq ;
 
-  if (arrayFind(a, s, ip2, order)) 
-    return 0;  /* no doubles */
+	if (arrayFind(a, s, ip2, order)) 
+		return 0;  /* no doubles */
   
-  j = arrayMax(a) + 1;
-  cp = uArray(a, arrayMax(a)) ; /* to create space */
+	j = arrayMax(a) + 1;
+	cp = uArray(a, arrayMax(a)) ; /* to create space */
 
 	/* avoid memcpy for same reasons as above */
-  {
-    cp = cp + a->size - 1 ;  /* cp is now end of last element */
-    cq = cp - a->size ;
-    k = (j - *ip2 - 2)*(a->size); /* k = # of bytes to move */
-    while(k--)
-      *cp-- = *cq--;
+	{
+		cp = cp + a->size - 1 ;  /* cp is now end of last element */
+		cq = cp - a->size ;
+		k = (j - *ip2 - 2)*(a->size); /* k = # of bytes to move */
+		while(k--)
+			*cp-- = *cq--;
     
-    cp = arrp(a,*ip2+1,char); 
-    cq = (char *) s; 
-    k = a->size;
-    while(k--)
-      *cp++ = *cq++;
-  }
-  ++*ip2 ;
-  return 1;
+		cp = arrp(a,*ip2+1,char); 
+		cq = (char *) s; 
+		k = a->size;
+		while(k--)
+			*cp++ = *cq++;
+	}
+	++*ip2 ;
+	return 1;
 }
 
 
@@ -528,7 +528,7 @@ int arrayFindInsert(Array a, void * s, int *ip, int (*order)(void*,void*))
  */
 int arrayStrcmp(char **s1, char **s2) 
 { 
-  return strcmp(*s1, *s2) ;
+	return strcmp(*s1, *s2);
 }
 
 
@@ -538,8 +538,9 @@ int arrayStrcmp(char **s1, char **s2)
  */
 int arrayIntcmp(int *ip1, int *ip2) 
 {
-  if (*ip1 == *ip2) return 0 ;
-  return (*ip1 < *ip2) ? -1 : 1 ;
+	if (*ip1 == *ip2) 
+		return 0;
+	return (*ip1 < *ip2) ? -1 : 1;
 }
 
 
@@ -549,6 +550,7 @@ int arrayIntcmp(int *ip1, int *ip2)
  */
 int arrayDoublecmp(double *dp1, double *dp2) 
 {
-  if (*dp1 == *dp2) return 0 ;
-  return (*dp1 < *dp2) ? -1 : 1 ;
+	if (*dp1 == *dp2) 
+		return 0 ;
+	return (*dp1 < *dp2) ? -1 : 1 ;
 }

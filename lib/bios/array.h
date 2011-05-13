@@ -54,10 +54,11 @@
  * Array.
  */
 typedef struct ArrayStruct
-{ char* base ;    // char* since need to do pointer arithmetic in bytes 
-  int   dim ;     // length of alloc'ed space 
-  int   size ;
-  int   max ;     // largest element accessed via array() -1 
+{
+	char* base ;    // char* since need to do pointer arithmetic in bytes 
+	int   dim ;     // length of alloc'ed space 
+	int   size ;
+	int   max ;     // largest element accessed via array() -1 
 } *Array ;
  
 /* NB we need the full definition for arru() for macros to work

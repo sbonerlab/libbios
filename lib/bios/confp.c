@@ -124,6 +124,9 @@ config *confp_open(char *fname)
 {
 	config *new;
 
+	if (fname == NULL)
+		return NULL;
+
 	new = (config *) malloc(sizeof(*new));
 
 	new->map = rbmap_new();
