@@ -1,0 +1,12 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+Name: @PACKAGE_NAME@
+Description: A library of data structures and algorithms for bioinformatics
+Version: @PACKAGE_VERSION@
+URL: @PACKAGE_URL@
+Requries.private: gsl
+Cflags: -I${includedir}
+Libs: -L{libdir}

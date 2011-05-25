@@ -2,15 +2,16 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.59])
-AC_INIT([libbios], [1.1.0], [david.chen@yale.edu])
+AC_INIT([libbios], [1.0.0], [david.chen@yale.edu])
 AC_CONFIG_SRCDIR([lib/Makefile.am])
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_MACRO_DIR([m4])
 
 AM_INIT_AUTOMAKE([-Wall -Werror])
 LT_INIT
-
 AM_SILENT_RULES([yes])
+
+AC_SUBST([BIOS_SO_VERSION], [1:0:0])
 
 # Checks for programs.
 AC_PROG_CC
@@ -32,5 +33,7 @@ AC_FUNC_MALLOC
 AC_FUNC_REALLOC
 AC_CHECK_FUNCS([memset pow sqrt strchr strdup strerror strrchr strstr strtol])
 
-AC_CONFIG_FILES([Makefile lib/Makefile])
+AC_CONFIG_FILES([Makefile 
+		 lib/Makefile 
+		 bios.pc:bios.pc.in])
 AC_OUTPUT
