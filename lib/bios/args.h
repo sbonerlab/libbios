@@ -8,6 +8,11 @@
  * Adapted for libbios by David Z. Chen at Yale University
  */
 
+/**
+ * \file args.h
+ * \author Adapted by David Z. Chen (david.chen@yale.edu)
+ */
+
 #ifndef ARGS_H
 #define ARGS_H
 

@@ -1,3 +1,9 @@
+
+/**
+ * \file list.h
+ * \author Adapted by David Z. Chen (david.chen@yale.edu) from Linux 2.6 code
+ */
+
 #ifndef LIST_H
 #define LIST_H
 

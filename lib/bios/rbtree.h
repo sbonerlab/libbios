@@ -88,11 +88,12 @@ static inline struct page * rb_insert_page_cache(struct inode * inode,
  out:
 	return ret;
 }
------------------------------------------------------------------------
+-----------------------------------------------------------------------*/
 
-  Adapted for userland use by David Z. Chen, Yale University
-
-*/
+/**
+ * \file rbtree.h
+ * \author Adapted by David Z. Chen (david.chen@yale.edu) from Linux 2.6 code
+ **/
 
 #ifndef	RBTREE_H
 #define RBTREE_H

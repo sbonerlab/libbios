@@ -16,6 +16,11 @@ AC_SUBST([BIOS_SO_VERSION], [1:0:0])
 # Checks for programs.
 AC_PROG_CC
 AC_PROG_LIBTOOL
+AC_CHECK_PROGS([DOXYGEN], [doxygen])
+if test -z "$DOXYGEN"; then
+	AC_MSG_WARN([Doxygen not found - continuing without Doxygen support])
+fi
+AM_CONDITIONAL([USE_DOXYGEN], [test -n "$DOXYGEN"])
 
 # Checks for libraries.
 AC_CHECK_LIB([m], [log], [], [AC_MSG_ERROR([Cannot find standard math library])])
@@ -33,6 +38,8 @@ AC_FUNC_MALLOC
 AC_FUNC_REALLOC
 AC_CHECK_FUNCS([memset pow sqrt strchr strdup strerror strrchr strstr strtol])
 
+# Output
+AM_COND_IF([USE_DOXYGEN], [AC_CONFIG_FILES([doc/Doxyfile])])
 AC_CONFIG_FILES([Makefile 
 		 lib/Makefile 
 		 bios.pc:bios.pc.in])

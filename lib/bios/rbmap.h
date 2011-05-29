@@ -1,3 +1,8 @@
+/**
+ * \file rbmap.h
+ * \author Created by David Z. Chen (david.chen@yale.edu)
+ */
+
 #ifndef RBMAP_H
 #define RBMAP_H
 

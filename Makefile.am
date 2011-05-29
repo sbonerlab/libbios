@@ -4,3 +4,15 @@ EXTRA_DIST = m4
 
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = bios.pc
+
+# Doxygen
+if USE_DOXYGEN
+
+doxygen:
+	cd doc && doxygen Doxyfile
+
+clean-local:
+	rm -rf $(top_srcdir)/doc/html
+
+.PHONY: doxygen clean-local
+endif

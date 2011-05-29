@@ -35,3 +35,8 @@ cd lib && rm -rf \
        Makefile.in \
        Makefile
 cd ..
+
+echo autoclean: cleaning doc
+cd doc && rm -rf \
+       Doxyfile
+cd ..

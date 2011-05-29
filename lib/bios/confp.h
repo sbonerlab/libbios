@@ -1,3 +1,9 @@
+
+/**
+ * \file confp.h
+ * \author Created by David Z. Chen (david.chen@yale.edu)
+ */
+
 #ifndef CONFP_H
 #define CONFP_H
 
