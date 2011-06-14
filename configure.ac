@@ -9,7 +9,7 @@ AC_CONFIG_MACRO_DIR([m4])
 
 AM_INIT_AUTOMAKE([-Wall -Werror])
 LT_INIT
-AM_SILENT_RULES([yes])
+##AM_SILENT_RULES([yes])
 
 AC_SUBST([BIOS_SO_VERSION], [1:0:0])
 
@@ -39,7 +39,7 @@ AC_FUNC_REALLOC
 AC_CHECK_FUNCS([memset pow sqrt strchr strdup strerror strrchr strstr strtol])
 
 # Output
-AM_COND_IF([USE_DOXYGEN], [AC_CONFIG_FILES([doc/Doxyfile])])
+##AM_COND_IF([USE_DOXYGEN], [AC_CONFIG_FILES([doc/Doxyfile])])
 AC_CONFIG_FILES([Makefile 
 		 lib/Makefile 
 		 bios.pc:bios.pc.in])
