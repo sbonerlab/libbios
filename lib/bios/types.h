@@ -1,7 +1,7 @@
 /**
  * \file types.h
  * \author Macros adapted by David Z. Chen from Linux 2.6 code
-*/
+ */
 #ifndef TYPES_H
 #define TYPES_H
 
