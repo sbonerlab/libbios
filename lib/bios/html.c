@@ -31,6 +31,7 @@
  *   \author Adapted by Lukas Habegger (lukas.habegger@yale.edu)
  */
 
+#include <config.h>
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -1499,7 +1500,7 @@ static int cgiIsMpInitialized(void) {
   return gMpBufferSize && gMpBuffer && gMpBoundarySize && gMpBoundary;
 }
 
-
+#ifndef HAVE_MEMMEM
 static char *memmem(char *s1, int sz1, char *s2, int sz2) 
 { /*
   equivalent of strstr() on memory, returns pointer to first byte
@@ -1521,7 +1522,7 @@ static char *memmem(char *s1, int sz1, char *s2, int sz2)
 
   return result;
 }
-
+#endif
 
 /* useful for debugging when using mem stuff instead of zero-terminated strings
 static void memputs(char *s, int sz) {
