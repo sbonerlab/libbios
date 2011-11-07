@@ -3,6 +3,7 @@
 #include "linestream.h"
 #include "common.h"
 #include "exportPEParser.h"
+#include <stdlib.h>
 
 
 
@@ -167,8 +168,25 @@ ExportPE* exportPEParser_nextEntry (void)
 char *exportPEParser_writeEntry ( singleEnd* currEntry )
 {
   static Stringa buffer = NULL;
+  Stringa strPosition = NULL;
+  Stringa strSingleScore = NULL;
+  Stringa strPairedScore = NULL;
+  Stringa strPartnerOffset = NULL;
+ 
   stringCreateClear( buffer, 100 );
-  stringPrintf( buffer, "%s\t%d\t%d\t%d\t%d\t%d\t%s\t%d\t%s\t%s\t%s\t%s\t%d\t%c\t%s\t%d\t%d\t%s\t%s\t%d\t%c\t%c",
+  stringCreateClear( strPosition, 10 );
+  stringCreateClear( strSingleScore, 10 );
+  stringCreateClear( strPairedScore, 10 );
+  stringCreateClear( strPartnerOffset, 10 );
+  
+  stringClear( strSingleScore );
+  stringClear( strPartnerOffset );
+  (currEntry->position==0 && currEntry->strand=='\0') ? stringPrintf( strPosition, "") : stringPrintf( strPosition, "%d", currEntry->position );
+  (currEntry->singleScore==0 && currEntry->strand=='\0') ? stringPrintf( strSingleScore, "") : stringPrintf( strSingleScore, "%d", currEntry->singleScore );
+  (currEntry->pairedScore==0 && currEntry->strand=='\0') ? stringPrintf( strPairedScore, "") : stringPrintf( strPairedScore,"%d",  currEntry->pairedScore );
+  (currEntry->partnerOffset==0 && currEntry->strand=='\0') ? stringPrintf( strPartnerOffset, "") : stringPrintf( strPartnerOffset, "%d", currEntry->partnerOffset );
+
+  stringPrintf( buffer, "%s\t%d\t%d\t%d\t%d\t%d\t%s\t%d\t%s\t%s\t%s\t%s\t%s\t%c\t%s\t%s\t%s\t%s\t%s\t%s\t%c\t%c",
 		currEntry->machine,
 		currEntry->run_number,
 		currEntry->lane,
@@ -181,15 +199,19 @@ char *exportPEParser_writeEntry ( singleEnd* currEntry )
 		currEntry->quality,
 		currEntry->chromosome,
 		currEntry->contig,
-		currEntry->position,
-		currEntry->strand,
+		string(strPosition),
+		currEntry->strand=='\0' ? ' ' : currEntry->strand,
 		currEntry->match_descriptor,
-		currEntry->singleScore,
-		currEntry->pairedScore,
+		string(strSingleScore),
+		string(strPairedScore),
 		currEntry->partnerChromosome,
 		currEntry->partnerContig,
-		currEntry->partnerOffset,
-		currEntry->partnerStrand,
+		string(strPartnerOffset),
+		currEntry->partnerStrand=='\0' ? ' ' : currEntry->partnerStrand,
 		currEntry->filter);
+  stringDestroy( strPosition );
+  stringDestroy( strSingleScore );
+  stringDestroy( strPairedScore );
+  stringDestroy( strPartnerOffset );
   return string( buffer );
 }
