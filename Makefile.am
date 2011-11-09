@@ -14,5 +14,9 @@ doxygen:
 clean-local:
 	rm -rf $(top_srcdir)/doc/html
 
+debug:
+	$(MAKE) all "CFLAGS=-g -DDEBUG " $(AM_MAKEFLAGS)
+
+
 .PHONY: doxygen clean-local
 endif
