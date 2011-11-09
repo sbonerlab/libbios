@@ -1,5 +1,6 @@
 lib_LTLIBRARIES = libbios.la
 libbios_la_SOURCES = bios/array.c \
+		     bios/bedParser.c \
 		     bios/bgrParser.c \
 		     bios/bits.c \
 		     bios/blastParser.c \
@@ -34,6 +35,7 @@ libbios_la_LIBADD = -lm -lgsl
 
 nobase_dist_include_HEADERS = bios/args.h \
 		  bios/array.h \
+		  bios/bedParser.h \
 		  bios/bgrParser.h \
 		  bios/bits.h \
 		  bios/blastParser.h \
