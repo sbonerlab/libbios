@@ -2,11 +2,11 @@ SUBDIRS = lib
 ACLOCAL_AMFLAGS = -I m4
 EXTRA_DIST = m4
 
+debug:
+	$(MAKE) all "CFLAGS=-g -DDEBUG " $(AM_MAKEFLAGS)
+
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = bios.pc
-
-debug:
-        $(MAKE) all "CFLAGS=-g -DDEBUG " $(AM_MAKEFLAGS)
 
 # Doxygen
 if USE_DOXYGEN
