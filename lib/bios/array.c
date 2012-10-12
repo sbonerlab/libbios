@@ -76,7 +76,7 @@ Array uArrayCreate(int n, int size)
 static void arrayExtend (Array a, int n)
 {
 	char *new ;
-	int oldsize, newsize ;
+	unsigned long long oldsize, newsize ;
 
 	if (!a || n < a->dim)
 		return ;
