@@ -70,7 +70,7 @@ Bed* bedParser_nextEntry (void)
 	currBed->strand = wordNext( w )[0];
 	currBed->thickStart = atoi( wordNext( w ) );
 	currBed->thickEnd = atoi( wordNext( w ) );
-	currBed->itemRGB = wordNext( w );
+	currBed->itemRGB = hlr_strdup( wordNext( w ) );
 	currBed->blockCount = atoi( wordNext( w ) );
 	currBed->subBlocks = arrayCreate( currBed->blockCount, SubBlock );
 	wsizes = wordIterCreate( wordNext( w ), ",", 1);
