@@ -63,7 +63,12 @@ Bed* bedParser_nextEntry (void)
       currBed->chromosome = hlr_strdup (wordNext (w));
       currBed->start = atoi (wordNext (w));
       currBed->end = atoi (wordNext (w));
-      currBed->name = hlr_strdup( wordNext(w) );
+      char* namePtr = wordNext(w);
+      if( namePtr ) {
+       currBed->name = hlr_strdup(  namePtr );
+      } else {
+	currBed->name=NULL;
+      }
       if( currBed->name ) {
 	currBed->extended = 1;
 	currBed->score = atoi( wordNext( w ) );
