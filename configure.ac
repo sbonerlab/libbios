@@ -39,7 +39,7 @@ AC_FUNC_REALLOC
 AC_CHECK_FUNCS([memset pow sqrt strchr strdup strerror strrchr strstr strtol memmem])
 
 # Output
-AM_COND_IF([USE_DOXYGEN], [AC_CONFIG_FILES([doc/Doxyfile])])
+#AM_COND_IF([USE_DOXYGEN], [AC_CONFIG_FILES([doc/Doxyfile])])
 AC_CONFIG_FILES([Makefile 
 		 lib/Makefile 
 		 bios.pc:bios.pc.in])
