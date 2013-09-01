@@ -7,6 +7,8 @@ rm -rf aclocal.m4 \
        autom4te.cache \
        autoscan.log \
        config.guess \
+       compile \
+       build-aux \
        bios.pc \
        config.h \
        config.h.in~ \
