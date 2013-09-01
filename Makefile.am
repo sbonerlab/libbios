@@ -3,7 +3,7 @@ ACLOCAL_AMFLAGS = -I m4 ${ACLOCAL_FLAGS}
 AM_MAKEFLAGS = --no-print-directory
 
 AM_CPPFLAGS = \
-	-I${top_srcdir}/src
+	-I${top_srcdir}
 
 PC_SED = \
 	$(AM_V_GEN)$(MKDIR_P) $(dir $@) && $(SED) \
