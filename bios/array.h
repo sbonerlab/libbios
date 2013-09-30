@@ -99,6 +99,12 @@ extern char    *uArrPop(Array a) ;
 #define arrayp(ar,i,type)	((type*)uArray(ar,i))
 #define array(ar,i,type)	(*(type*)uArray(ar,i))
 #endif
+
+#define arrayPush(ar,elt,type) \
+    do { \
+      array(ar, arrayMax(ar), type) = elt; \
+    } while(0)
+
 /* only use arru()/arrp() when accessing an existing element */
 
 
