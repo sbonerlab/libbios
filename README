@@ -1,0 +1,8 @@
+If you have checked out from github, in order to generate the configuration file (configure) and install the library you would need:
+
+$ libtoolize
+$ aclocal
+$ autoheader
+$ automake --force-missing --add-missing
+$ autoconf
+
