@@ -19,3 +19,8 @@ Makefile.in
 bios.pc
 .dirstamp
 stamp-h1
+
+include/
+doc/
+
+.fuse*

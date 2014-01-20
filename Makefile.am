@@ -102,5 +102,6 @@ clean-local:
 	rm -rf $(top_srcdir)/doc/html
 
 endif
+
 debug:
 	$(MAKE) "CFLAGS=-g -DDEBUG " all $(AM_MAKEFILE)
